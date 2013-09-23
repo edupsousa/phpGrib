@@ -80,18 +80,14 @@ class GribLatLonGridDescription extends GribGridDescription
 	public $pointsAlongLongitude;
 	
 	public $latitudeFirstPoint;
-	public $latitudeFirstPointIsSouth;
 	public $longitudeFirstPoint;
-	public $longitudeFirstPointIsWest;
 	
 	public $directionIncrementGiven;
 	public $earthModel;
 	public $componentsDirection;
 	
 	public $latitudeLastPoint;
-	public $latitudeLastPointIsSouth;
 	public $longitudeLastPoint;
-	public $longitudeLastPointIsWest;
 	
 	public $longitudinalIncrement;
 	public $latitudinalIncrement;

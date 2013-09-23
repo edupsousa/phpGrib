@@ -46,10 +46,8 @@ class GribGridDescriptionSectionParser extends GribParser
 		$description->pointsAlongLatitude = self::_getUInt($rawData, 0, 2);
 		$description->pointsAlongLongitude = self::_getUInt($rawData, 2, 2);
 		
-		list($description->latitudeFirstPointIsSouth, $description->latitudeFirstPoint)
-				= self::_getLatLonWithHemisphere($rawData, 4);
-		list($description->longitudeFirstPointIsWest, $description->longitudeFirstPoint)
-				= self::_getLatLonWithHemisphere($rawData, 7);
+		$description->latitudeFirstPoint = self::_getSignedInt($rawData, 4, 3);
+		$description->longitudeFirstPoint = self::_getSignedInt($rawData, 7, 3);
 		
 		$description->directionIncrementGiven = self::_isFlagSet(128, $rawData, 10);
 		$description->earthModel = (self::_isFlagSet(64, $rawData, 10) ?
@@ -60,10 +58,8 @@ class GribGridDescriptionSectionParser extends GribParser
 			GribLatLonGridDescription::DIRECTION_BY_GRID : 
 			GribLatLonGridDescription::DIRECTION_NORTH_EAST);
 		
-		list($description->latitudeLastPointIsSouth, $description->latitudeLastPoint)
-				= self::_getLatLonWithHemisphere($rawData, 11);
-		list($description->longitudeLastPointIsWest, $description->longitudeLastPoint)
-				= self::_getLatLonWithHemisphere($rawData, 14);
+		$description->latitudeLastPoint = self::_getSignedInt($rawData, 11, 3);
+		$description->longitudeLastPoint = self::_getSignedInt($rawData, 14, 3);
 		
 		$description->longitudinalIncrement = self::_getUInt($rawData, 17, 2);
 		$description->latitudinalIncrement = self::_getUInt($rawData, 19, 2);

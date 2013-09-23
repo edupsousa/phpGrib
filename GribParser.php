@@ -18,17 +18,6 @@ class GribParserException extends Exception
 
 class GribParser
 {
-	protected static function _getLatLonWithHemisphere($string, $position)
-	{
-		$coord = self::_getSignedInt($string, $position, 3);
-		if ($coord < 0) 
-			$flag = true;
-		else
-			$flag = false;
-		
-		return array($flag, abs($coord));
-	}
-
 	protected static function _getRawSectionFromMessage($message, &$currentPosition, $length = false)
 	{
 		if ($length === false)
