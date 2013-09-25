@@ -7,11 +7,19 @@
  * @license http://opensource.org/licenses/GPL-3.0 GNU Public License 3.0
  */
 
+/**
+ * GribGridDescription is the base class for classes used to describe the
+ * grid used in the GRIB message.
+ */
 class GribGridDescription
 {
 	
 }
 
+/**
+ * GribLatLonGridDescription is used to describe a quasi-regular grid based
+ * on latitude and longitude of the points
+ */
 class GribLatLonGridDescription extends GribGridDescription
 {
 	const EARTH_SPHERICAL = 0;

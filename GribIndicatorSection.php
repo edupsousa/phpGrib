@@ -9,6 +9,9 @@
 
 require_once('GribSection.php');
 
+/**
+ * GribIndicatorSection represent the Indicator Section from a GRIB message.
+ */
 class GribIndicatorSection extends GribSection
 {
 	public $gribIndicator;

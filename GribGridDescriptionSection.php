@@ -10,6 +10,10 @@
 require_once('GribSection.php');
 require_once('GribGridDescription.php');
 
+/**
+ * GribGridDescriptionSection represents the Grid Description Section (GDS)
+ * of a GRIB message.
+ */
 class GribGridDescriptionSection extends GribSection
 {
 	public $sectionLength;

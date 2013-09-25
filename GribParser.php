@@ -16,6 +16,11 @@ require_once('GribProductDefinitionSectionParser.php');
 require_once('GribGridDescriptionSectionParser.php');
 require_once('GribBinaryDataSectionParser.php');
 
+
+/**
+ * GribParserException extends the PHP Exception class for throwing
+ * exceptions related to Grib parsing.
+ */
 class GribParserException extends Exception
 {
 	const UNABLE_TO_OPEN_FILE = 0x1;
@@ -25,6 +30,11 @@ class GribParserException extends Exception
 	const MESSAGE_LENGHT_MISMATCH = 0x5;
 }
 
+/**
+ * GribParser is the base class for Grib parsing classes. It contains static
+ * functions to obtain and convert data from binary strings used by its child
+ * classes.
+ */
 class GribParser
 {
 	protected static function _getRawSectionFromMessage($message, &$currentPosition, $length = false)

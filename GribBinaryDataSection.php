@@ -9,6 +9,11 @@
 
 require_once('GribSection.php');
 
+/**
+ * GribBinaryDataSection represent the Binary Data Section (BDS) from
+ * a GRIB message. It contains meta-data fields, raw packed data and functions 
+ * to unpack data.
+ */
 class GribBinaryDataSection extends GribSection
 {
 	const SIMPLE_PACKING = 0;

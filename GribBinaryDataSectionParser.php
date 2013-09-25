@@ -9,6 +9,10 @@
 
 require_once('GribParser.php');
 
+/**
+ * GribBinaryDataSectionParser is used to parse the Binary Data Section
+ * from a binary string.
+ */
 class GribBinaryDataSectionParser extends GribParser
 {
 	public static function parse($rawData)

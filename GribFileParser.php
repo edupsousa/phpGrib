@@ -9,6 +9,9 @@
 
 require_once('GribParser.php');
 
+/**
+ * GribFileParser is used to parse a file containing GribMessages.
+ */
 class GribFileParser extends GribParser
 {
 	const MESSAGE_IDENTIFICATOR_LENGHT = 4;

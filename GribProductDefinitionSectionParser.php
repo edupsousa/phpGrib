@@ -9,6 +9,10 @@
 
 require_once('GribParser.php');
 
+/**
+ * GribProductDefinitionSectionParser is used to parse the Product Definition
+ * Section from a binary string.
+ */
 class GribProductDefinitionSectionParser extends GribParser
 {
 	const FLAG_HAS_GDS = 128;

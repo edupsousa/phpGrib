@@ -9,6 +9,9 @@
 
 require_once('GribParser.php');
 
+/**
+ * GribMessageParser is used to parse a GRIB message from a binary string.
+ */
 class GribMessageParser extends GribParser
 {
 	public static function parse($rawData)

@@ -13,6 +13,9 @@ require_once('GribProductDefinitionSection.php');
 require_once('GribGridDescriptionSection.php');
 require_once('GribBinaryDataSection.php');
 
+/**
+ * GribMessage is the PHP representation of a binary GRIB message.
+ */
 class GribMessage extends GribSection
 {
 	/**

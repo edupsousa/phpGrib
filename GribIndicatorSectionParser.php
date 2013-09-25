@@ -9,6 +9,10 @@
 
 require_once('GribParser.php');
 
+/**
+ * GribIndicatorSectionParser is used to parse the Indicator Section (IS)
+ * from a binary string.
+ */
 class GribIndicatorSectionParser extends GribParser
 {
 	public static function parse($rawData)

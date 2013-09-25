@@ -9,6 +9,10 @@
 
 require_once('GribParser.php');
 
+/**
+ * GribGridDescriptionSectionParser is used to parse the Grid Description 
+ * Section (GDS) from a binary string.
+ */
 class GribGridDescriptionSectionParser extends GribParser
 {
 	public static function parse($rawData)
