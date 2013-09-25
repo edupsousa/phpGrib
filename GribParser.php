@@ -60,8 +60,8 @@ class GribParser
 	
 	protected static function _getUInt($string, $start, $length)
 	{
-		$value = unpack('H*value', substr($string, $start, $length));
-		return hexdec($value['value']);
+		$value = unpack('H*', substr($string, $start, $length));
+		return hexdec($value[1]);
 	}
 	
 	protected static function _getSignedInt($string, $start, $length)
