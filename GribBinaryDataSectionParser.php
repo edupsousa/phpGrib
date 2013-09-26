@@ -15,6 +15,15 @@ require_once('GribParser.php');
  */
 class GribBinaryDataSectionParser extends GribParser
 {
+	/**
+	 * Parse a binary string containing the Binary Data Section (BDS) from a
+	 * GRIB Message. Return a GribBinaryDataSection on success or throw a
+	 * GribParserException on error.
+	 * 
+	 * @param string $rawData The binary string to parse
+	 * @return GribBinaryDataSection The Binary Data Section representation
+	 * @throws GribParserException
+	 */
 	public static function parse($rawData)
 	{
 		$section = new GribBinaryDataSection();

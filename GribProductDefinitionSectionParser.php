@@ -18,6 +18,15 @@ class GribProductDefinitionSectionParser extends GribParser
 	const FLAG_HAS_GDS = 128;
 	const FLAG_HAS_BMS = 64;
 	
+	/**
+	 * Parse a binary string containing the Product Definition Section (PDS) from a
+	 * GRIB Message. Return a GribProductDefinitionSection on success or throw a
+	 * GribParserException on error.
+	 * 
+	 * @param string $rawData The binary string to parse
+	 * @return GribProductDefinitionSection The Product Definition Section representation
+	 * @throws GribParserException
+	 */
 	public static function parse($rawData)
 	{
 		$section = new GribProductDefinitionSection();

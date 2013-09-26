@@ -14,6 +14,14 @@ require_once('GribParser.php');
  */
 class GribMessageParser extends GribParser
 {
+	/**
+	 * Parse a binary string containing a encoded GRIB message and return a
+	 * GribMessage object in case of sucessfull parsing.
+	 * 
+	 * @param string $rawData The binary string to parse
+	 * @return GribMessage The GRIB message representation.
+	 * @throws GribParserException
+	 */
 	public static function parse($rawData)
 	{
 		$currentPosition = 0;

@@ -15,6 +15,16 @@ require_once('GribParser.php');
  */
 class GribGridDescriptionSectionParser extends GribParser
 {
+	
+	/**
+	 * Parse a binary string containing the Grid Description Section (GDS) from a
+	 * GRIB Message. Return a GribGridDescriptionSection on success or throw a
+	 * GribParserException on error.
+	 * 
+	 * @param string $rawData The binary string to parse
+	 * @return GribGridDescriptionSection The Grid Description Section representation
+	 * @throws GribParserException
+	 */
 	public static function parse($rawData)
 	{
 		$section = new GribGridDescriptionSection();

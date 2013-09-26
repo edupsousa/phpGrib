@@ -18,6 +18,12 @@ class GribFileParser extends GribParser
 	const MESSAGE_SIZE_FIELD_LENGHT = 3;
 	const GRIB_VERSION_FIELD_LENGHT = 1;
 	
+	/**
+	 * Retrieve a array of GRIB messages from the file specified by the file path.
+	 * 
+	 * @param string $path The path of the file to retrieve GRIB messages
+	 * @return array A array containing all GRIB messages from the file
+	 */
 	public static function getMessages($path)
 	{
 		$handle = fopen($path,'rb');
@@ -49,6 +55,12 @@ class GribFileParser extends GribParser
 		return $messages;
 	}
 	
+	/**
+	 * Check if there`s a GRIB message at the current file position.
+	 * 
+	 * @param resource $handle The file handle to check
+	 * @return boolean TRUE if a GRIB message is found, FALSE if not. 
+	 */
 	protected static function _fileHasGribMessage($handle)
 	{
 		if (self::_readStringFromFile($handle, self::MESSAGE_IDENTIFICATOR_LENGHT) == 'GRIB')
@@ -56,11 +68,24 @@ class GribFileParser extends GribParser
 		return false;
 	}
 	
+	/**
+	 * Retrieve a string at the current position from the given file handle.
+	 * 
+	 * @param resource $handle The file handle resource
+	 * @param integer $length The string length to retrieve
+	 * @return string A string retrieved from the file
+	 */
 	protected static function _readStringFromFile($handle, $length)
 	{
 		return fread($handle, $length);
 	}
 	
+	/**
+	 * Retrieve the GRIB message length for the message at the current file position.
+	 * 
+	 * @param resource $handle The file handle.
+	 * @return integer The message length
+	 */
 	protected static function _readMessageSizeFromFile($handle)
 	{
 		$raw = fread($handle, self::MESSAGE_SIZE_FIELD_LENGHT);

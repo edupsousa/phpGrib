@@ -15,6 +15,15 @@ require_once('GribParser.php');
  */
 class GribIndicatorSectionParser extends GribParser
 {
+	/**
+	 * Parse a binary string containing the Indicator Section (IS) from a
+	 * GRIB Message. Return a GribIndicatorSection on success or throw a
+	 * GribParserException on error.
+	 * 
+	 * @param string $rawData The binary string to parse
+	 * @return GribIndicatorSection The Indicator Section representation
+	 * @throws GribParserException
+	 */
 	public static function parse($rawData)
 	{
 		$section = new GribIndicatorSection();
