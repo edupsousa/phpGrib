@@ -31,6 +31,14 @@ class GribBinaryDataSection extends GribSection
 	public $harmonicCoefficientRealPart;
 	public $rawBinaryData;
 	
+	/**
+	 * Get data at specified index from raw binary data.
+	 * Data is returned unpacked. Currently this function only
+	 * supports simple packing algorithm.
+	 * 
+	 * @param integer $index The index to find data
+	 * @return float The unpacked data as a float point value
+	 */
 	public function getDataAt($index)
 	{
 		if ($this->packingFormat != self::SIMPLE_PACKING)
