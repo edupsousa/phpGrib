@@ -43,24 +43,14 @@ class GribGridDescriptionSectionParser extends GribParser
 		return $section;
 	}
 	
-	protected static function _parseGridDescriptionSection($rawData)
-	{
-		$section = new GribGridDescriptionSection();
-		$section->sectionLength = self::_getUInt($rawData, 0, 3);
-		$section->numberOfVerticalCoordinateParameters = self::_getUInt($rawData, 3, 1);
-		$section->pvOrPl = self::_getUInt($rawData, 4, 1);
-		$section->dataRepresentationType = self::_getUInt($rawData, 5, 1);
-		
-		if ($section->dataRepresentationType == 0) {
-			$gridDescription = substr($rawData, 6);
-			$section->gridDescription = self::_parseLatLonGridDescription($gridDescription);
-		} else {
-			throw new GribParserException('Not implemented!!');
-		}
-		
-		return $section;
-	}
-	
+	/**
+	 * Parse a quasi-regular grid description from a binary string.
+	 * 
+	 * @param string $rawData The binary data containing a quasi-regular
+	 * grid description
+	 * @return GribLatLonGridDescription A object representing the quasi-regular
+	 * grid description.
+	 */
 	protected static function _parseLatLonGridDescription($rawData)
 	{
 		$description = new GribLatLonGridDescription();
