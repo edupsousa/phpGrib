@@ -8,9 +8,7 @@
  */
 
 /**
- * GribSection is a base class for the GribMessage and section classes
- * 
- * This class is not intended for direct use.
+ * GribSection is the parent class for GribMessage and section classes
  */
 class GribSection
 {

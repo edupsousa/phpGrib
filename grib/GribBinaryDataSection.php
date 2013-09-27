@@ -10,9 +10,9 @@
 require_once('GribSection.php');
 
 /**
- * GribBinaryDataSection represent the Binary Data Section (BDS) from
- * a GRIB message. It contains meta-data fields, raw packed data and functions 
- * to unpack data.
+ * GribBinaryDataSection is used to represent the Binary Data Section (BDS) from
+ * a GRIB message. It contains the section fields, raw packaged data and functions 
+ * to unpack them.
  */
 class GribBinaryDataSection extends GribSection
 {
@@ -32,11 +32,11 @@ class GribBinaryDataSection extends GribSection
 	public $rawBinaryData;
 	
 	/**
-	 * Get data at specified index from raw binary data.
+	 * Get data at specified index from the raw binary data.
 	 * Data is returned unpacked. Currently this function only
-	 * supports simple packing algorithm.
+	 * supports the simple packing algorithm.
 	 * 
-	 * @param integer $index The index to find data
+	 * @param integer $index Index of the data
 	 * @return float The unpacked data as a float point value
 	 */
 	public function getDataAt($index)

@@ -10,7 +10,7 @@
 require_once('GribParser.php');
 
 /**
- * GribFileParser is used to parse a file containing GribMessages.
+ * GribFileParser is used to parse a file containing GRIB Messages.
  */
 class GribFileParser extends GribParser
 {
@@ -19,10 +19,13 @@ class GribFileParser extends GribParser
 	const GRIB_VERSION_FIELD_LENGHT = 1;
 	
 	/**
-	 * Retrieve a array of GRIB messages from the file specified by the file path.
+	 * Retrieve a array of GribMeessage objects from the file 
+	 * specified by the path.
 	 * 
 	 * @param string $path The path of the file to retrieve GRIB messages
-	 * @return array A array containing all GRIB messages from the file
+	 * @return array A array containing all GRIB messages from the 
+	 * file as GribMessage objects
+	 * @throws GribParserException
 	 */
 	public static function getMessages($path)
 	{
@@ -81,7 +84,7 @@ class GribFileParser extends GribParser
 	}
 	
 	/**
-	 * Retrieve the GRIB message length for the message at the current file position.
+	 * Retrieve the GRIB message length from the file.
 	 * 
 	 * @param resource $handle The file handle.
 	 * @return integer The message length

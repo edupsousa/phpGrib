@@ -12,7 +12,7 @@ require_once('GribGridDescription.php');
 
 /**
  * GribGridDescriptionSection represents the Grid Description Section (GDS)
- * of a GRIB message.
+ * of a GRIB message and his fields.
  */
 class GribGridDescriptionSection extends GribSection
 {

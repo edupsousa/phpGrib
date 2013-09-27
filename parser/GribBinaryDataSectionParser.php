@@ -10,14 +10,14 @@
 require_once('GribParser.php');
 
 /**
- * GribBinaryDataSectionParser is used to parse the Binary Data Section
- * from a binary string.
+ * GribBinaryDataSectionParser is used to parse the GRIB Message Binary 
+ * Data Section from a binary string.
  */
 class GribBinaryDataSectionParser extends GribParser
 {
 	/**
-	 * Parse a binary string containing the Binary Data Section (BDS) from a
-	 * GRIB Message. Return a GribBinaryDataSection on success or throw a
+	 * Parse a binary string containing the Binary Data Section (BDS).
+	 * Return a GribBinaryDataSection on success or throw a
 	 * GribParserException on error.
 	 * 
 	 * @param string $rawData The binary string to parse

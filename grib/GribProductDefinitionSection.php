@@ -10,7 +10,7 @@
 require_once('GribSection.php');
 
 /**
- * GribProductDefinitionSection represent the Product Definition Section (PDS)
+ * GribProductDefinitionSection represents the Product Definition Section (PDS)
  * from a GRIB message.
  */
 class GribProductDefinitionSection extends GribSection

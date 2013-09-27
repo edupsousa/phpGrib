@@ -31,7 +31,7 @@ class GribParserException extends Exception
 }
 
 /**
- * GribParser is the base class for Grib parsing classes. It contains static
+ * GribParser is the base class for all GRIB parsing classes. It contains static
  * functions to obtain and convert data from binary strings used by its child
  * classes.
  */
@@ -44,8 +44,8 @@ class GribParser
 	 * pointer $currentPosition. If the optional $length parameter is not set
 	 * the section length is retrieved from 3 bytes starting at $currentPosition
 	 * as a unsigned integer.
-	 * After retrieving the $currentPosition pointer is updated to 1 position
-	 * after the retrieved section.
+	 * After retrieving the section the $currentPosition pointer is updated to the 
+	 * position after the retrieved section.
 	 * 
 	 * @param string $message A binary string containing the entire GRIB message
 	 * @param integer $currentPosition A pointer to the current position of the 

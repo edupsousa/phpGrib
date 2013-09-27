@@ -8,7 +8,7 @@
  */
 
 /**
- * GribGridDescription is the base class for classes used to describe the
+ * GribGridDescription is the base class used to describe the 
  * grid used in the GRIB message.
  */
 class GribGridDescription
@@ -17,8 +17,8 @@ class GribGridDescription
 }
 
 /**
- * GribLatLonGridDescription is used to describe a quasi-regular grid based
- * on latitude and longitude of the points
+ * GribLatLonGridDescription is used to describe a 
+ * latitude/longitude based grid
  */
 class GribLatLonGridDescription extends GribGridDescription
 {

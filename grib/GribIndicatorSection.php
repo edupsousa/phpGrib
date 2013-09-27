@@ -10,7 +10,7 @@
 require_once('GribSection.php');
 
 /**
- * GribIndicatorSection represent the Indicator Section from a GRIB message.
+ * GribIndicatorSection represent the Indicator Section of a GRIB message.
  */
 class GribIndicatorSection extends GribSection
 {

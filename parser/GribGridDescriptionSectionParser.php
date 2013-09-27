@@ -44,11 +44,11 @@ class GribGridDescriptionSectionParser extends GribParser
 	}
 	
 	/**
-	 * Parse a quasi-regular grid description from a binary string.
+	 * Parse a latitude/longitude grid description from a binary string.
 	 * 
-	 * @param string $rawData The binary data containing a quasi-regular
+	 * @param string $rawData The binary data containing a latitude/longitude
 	 * grid description
-	 * @return GribLatLonGridDescription A object representing the quasi-regular
+	 * @return GribLatLonGridDescription A object representing the latitude/longitude
 	 * grid description.
 	 */
 	protected static function _parseLatLonGridDescription($rawData)

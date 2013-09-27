@@ -14,35 +14,33 @@ require_once('GribGridDescriptionSection.php');
 require_once('GribBinaryDataSection.php');
 
 /**
- * GribMessage is the PHP representation of a binary GRIB message.
+ * GribMessage is the PHP representation of a GRIB message.
  */
 class GribMessage extends GribSection
 {
 	/**
-	 * @var GribIndicatorSection store the indicator section from grib message
+	 * @var GribIndicatorSection
 	 */
 	public $indicatorSection;
 	
 	/**
-	 * @var GribProductDefinitionSection store the product definition section 
-	 * from Grib message 
+	 * @var GribProductDefinitionSection
 	 */
 	public $productDefinitionSection;
 	
 	/**
-	 * @var GribGridDescriptionSection store the grid description section 
-	 * from Grib message 
+	 * @var GribGridDescriptionSection
 	 */
 	public $gridDescriptionSection;
 	
 	/**
-	 * @var null will store the bitmap section in future implementations
+	 * @var null
+	 * @todo Implement the Bitmap section parsing
 	 */
 	public $bitmapSection;
 	
 	/**
-	 * @var GribBinaryDataSection stores the binary data section from Grib 
-	 * message
+	 * @var GribBinaryDataSection
 	 */
 	public $binaryDataSection;
 }
