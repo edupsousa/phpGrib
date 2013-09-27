@@ -8,7 +8,7 @@
  */
 
 
-require_once('GribMessage.php');
+require_once(dirname(__FILE__) . '/../grib/GribMessage.php');
 require_once('GribFileParser.php');
 require_once('GribMessageParser.php');
 require_once('GribIndicatorSectionParser.php');
