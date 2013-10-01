@@ -29,10 +29,14 @@ class GribGridDescriptionSectionParser extends GribParser
 	{
 		$section = new GribGridDescriptionSection();
 		$section->sectionLength = self::_getUInt($rawData, 0, 3);
-		$section->numberOfVerticalCoordinateParameters = self::_getUInt($rawData, 3, 1);
+		$section->verticalCoordinateParameters = self::_getUInt($rawData, 3, 1);
 		$section->pvOrPl = self::_getUInt($rawData, 4, 1);
 		$section->dataRepresentationType = self::_getUInt($rawData, 5, 1);
 		
+		/**
+		 * @todo Parse other data representation types
+		 * Currently the only representation available is Lat/Lon Plate Carree 
+		 */
 		if ($section->dataRepresentationType == 0) {
 			$gridDescription = substr($rawData, 6);
 			$section->gridDescription = self::_parseLatLonGridDescription($gridDescription);

@@ -37,7 +37,7 @@ class GribProductDefinitionSectionParser extends GribParser
 		$section->gridIdentification = self::_getUInt($rawData, 6, 1);
 		$section->hasGDS = self::_isFlagSet(self::FLAG_HAS_GDS, $rawData, 7);
 		$section->hasBMS = self::_isFlagSet(self::FLAG_HAS_BMS, $rawData, 7);
-		$section->parameterAndUnits = self::_getUInt($rawData, 8, 1);
+		$section->parameterId = self::_getUInt($rawData, 8, 1);
 		$section->typeOfLayerOrLevel = self::_getUInt($rawData, 9, 1);
 		$section->layerOrLevelValue = self::_getUInt($rawData, 10, 2);
 		$section->year = self::_getUInt($rawData, 12, 1);
@@ -53,7 +53,7 @@ class GribProductDefinitionSectionParser extends GribParser
 		$section->numberMissing = self::_getUInt($rawData, 23, 1);
 		$section->century = self::_getUInt($rawData, 24, 1);
 		$section->subcenterIdentification = self::_getUInt($rawData, 25, 1);
-		$section->decimalScaleFactor = self::_getUInt($rawData, 26, 2);
+		$section->decimalScaleFactor = self::_getSignedInt($rawData, 26, 2);
 		
 		if ($section->sectionLength > 28)
 			$section->reserved = substr($rawData, 28);

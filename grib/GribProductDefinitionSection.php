@@ -22,7 +22,7 @@ class GribProductDefinitionSection extends GribSection
 	public $gridIdentification;
 	public $hasGDS;
 	public $hasBMS;
-	public $parameterAndUnits;
+	public $parameterId;
 	public $typeOfLayerOrLevel;
 	public $layerOrLevelValue;
 	public $year;

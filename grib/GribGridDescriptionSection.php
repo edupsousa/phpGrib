@@ -17,7 +17,7 @@ require_once('GribGridDescription.php');
 class GribGridDescriptionSection extends GribSection
 {
 	public $sectionLength;
-	public $numberOfVerticalCoordinateParameters;
+	public $verticalCoordinateParameters;
 	public $pvOrPl;
 	public $dataRepresentationType;
 	public $gridDescription;
