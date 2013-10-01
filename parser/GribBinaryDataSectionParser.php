@@ -39,7 +39,7 @@ class GribBinaryDataSectionParser extends GribParser
 		} else if ($isComplexPacking && !$isHarmonicPacking) {
 			$section->packingFormat = GribBinaryDataSection::COMPLEX_PACKING;
 		} else {
-			throw new GribParserException('Invalid packing method! Harmonic complex?');
+			throw new GribParserException('Invalid packing method!');
 		}
 		
 		$section->originalDataWereInteger = self::_isFlagSet(32, $rawData, 3);
