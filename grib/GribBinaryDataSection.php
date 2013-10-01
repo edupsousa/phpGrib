@@ -43,15 +43,25 @@ class GribBinaryDataSection extends GribSection
 	{
 		if ($this->packingFormat != self::SIMPLE_PACKING)
 			throw new Exception ('Complex and harmonic unpacking not implemented!');
+		
+		/*
+		 * If zero bits are need for packing so all points got the same value
+		 * of the reference value.
+		 */
+		if ($this->datumPackingBits == 0)
+			return $this->referenceValue;
 
-		$charsToGet = ceil($this->datumPackingBits / 8);
-		$bitPosition = $index * $this->datumPackingBits;
+		/**
+		 * @todo Optimize unpacking algorithm to allow use of partial bytes
+		 */
+		if ($this->datumPackingBits % 8)
+			throw new Exception('Currently we only suport unpacking multiples of 8 bits');
+
+		$charsToGet = (int)$this->datumPackingBits / 8;
+		$bytePosition = $index * $charsToGet;
 		
-		$hexData = unpack('H*', substr($this->rawBinaryData, floor($bitPosition / 8), $charsToGet));
-		$intData = hexdec($hexData[1]);
-		
-		$bitsToSet = (pow(2, $this->datumPackingBits) - 1) << ($bitPosition % 8);
-		$packedValue = $intData & $bitsToSet;
+		$hexData = unpack('H*', substr($this->rawBinaryData, $bytePosition, $charsToGet));
+		$packedValue = hexdec($hexData[1]);
 		
 		return ($this->referenceValue + ($packedValue * pow(2,  $this->binaryScaleFactor)));
 	}
