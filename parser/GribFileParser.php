@@ -23,19 +23,41 @@ class GribFileParser extends GribParser
 	 * specified by the path.
 	 * 
 	 * @param string $path The path of the file to retrieve GRIB messages
+	 * @param array|null $filter (Optional) If set, filter the messages returned by this function.
+	 * Example: To return only messages with parameter 76 and 52 (Cloud Water and Relative Humidity), 
+	 * with level type 100 (Isobaric Level) and level value 1000 (1000mb level) use:
+	 * $filter = array(
+	 * 		'parameters'=>array(76),
+	 * 		'levelTypes'=>array(100),
+	 * 		'levelValues'=>array(1000),
+	 * );
 	 * @return GribMessage[] A array containing all GRIB messages from the 
 	 * file as GribMessage objects
 	 * @throws GribParserException
 	 */
-	public static function loadFile($path)
+	public static function loadFile($path, $filter = null)
 	{
 		$handle = fopen($path,'rb');
 		if (!$handle)
 			throw new GribParserException('',  GribParserException::UNABLE_TO_OPEN_FILE);
 		
 		$messages = array();
-		while ($messages[] = self::readMessage($handle));
-		array_pop($messages);
+		while ($message = self::readMessage($handle)) {
+			if ($filter) {
+				if (isset($filter['parameters']) &&
+				!in_array($message->productDefinitionSection->parameterId,$filter['parameters']))
+					continue;
+				
+				if (isset($filter['levelTypes']) &&
+				!in_array($message->productDefinitionSection->typeOfLayerOrLevel,$filter['levelTypes']))
+					continue;
+				
+				if (isset($filter['levelValues']) &&
+				!in_array($message->productDefinitionSection->layerOrLevelValue,$filter['levelValues']))
+					continue;
+			}
+			$messages[] = $message;
+		}
 		
 		fclose($handle);
 		return $messages;
