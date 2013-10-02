@@ -1,31 +1,31 @@
 <?php
 /**
- * GribGridDescriptionSectionParser class file
+ * GribGridDescriptionSectionDecoder class file
  * 
  * @author Eduardo P de Sousa <edupsousa@gmail.com>
  * @copyright Copyright (c) 2013, Eduardo P de Sousa
  * @license http://opensource.org/licenses/GPL-3.0 GNU Public License 3.0
  */
 
-require_once('GribParser.php');
+require_once('GribDecoder.php');
 
 /**
- * GribGridDescriptionSectionParser is used to parse the Grid Description 
+ * GribGridDescriptionSectionDecoder is used to decode the Grid Description 
  * Section (GDS) from a binary string.
  */
-class GribGridDescriptionSectionParser extends GribParser
+class GribGridDescriptionSectionDecoder extends GribDecoder
 {
 	
 	/**
-	 * Parse a binary string containing the Grid Description Section (GDS) from a
+	 * Decode a binary string containing the Grid Description Section (GDS) from a
 	 * GRIB Message. Return a GribGridDescriptionSection on success or throw a
-	 * GribParserException on error.
+	 * GribDecoderException on error.
 	 * 
-	 * @param string $rawData The binary string to parse
+	 * @param string $rawData The binary string to decode
 	 * @return GribGridDescriptionSection The Grid Description Section representation
-	 * @throws GribParserException
+	 * @throws GribDecoderException
 	 */
-	public static function parse($rawData)
+	public static function decode($rawData)
 	{
 		$section = new GribGridDescriptionSection();
 		$section->sectionLength = self::_getUInt($rawData, 0, 3);
@@ -34,28 +34,28 @@ class GribGridDescriptionSectionParser extends GribParser
 		$section->dataRepresentationType = self::_getUInt($rawData, 5, 1);
 		
 		/**
-		 * @todo Parse other data representation types
+		 * @todo Decode other data representation types
 		 * Currently the only representation available is Lat/Lon Plate Carree 
 		 */
 		if ($section->dataRepresentationType == 0) {
 			$gridDescription = substr($rawData, 6);
-			$section->gridDescription = self::_parseLatLonGridDescription($gridDescription);
+			$section->gridDescription = self::_decodeLatLonGridDescription($gridDescription);
 		} else {
-			throw new GribParserException('Not implemented!!');
+			throw new GribDecoderException('Not implemented!!');
 		}
 		
 		return $section;
 	}
 	
 	/**
-	 * Parse a latitude/longitude grid description from a binary string.
+	 * Decode a latitude/longitude grid description from a binary string.
 	 * 
 	 * @param string $rawData The binary data containing a latitude/longitude
 	 * grid description
 	 * @return GribLatLonGridDescription A object representing the latitude/longitude
 	 * grid description.
 	 */
-	protected static function _parseLatLonGridDescription($rawData)
+	protected static function _decodeLatLonGridDescription($rawData)
 	{
 		$description = new GribLatLonGridDescription();
 		

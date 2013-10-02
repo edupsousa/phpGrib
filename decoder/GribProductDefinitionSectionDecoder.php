@@ -1,33 +1,33 @@
 <?php
 /**
- * GribProductDefinitionSectionParser class file
+ * GribProductDefinitionSectionDecoder class file
  * 
  * @author Eduardo P de Sousa <edupsousa@gmail.com>
  * @copyright Copyright (c) 2013, Eduardo P de Sousa
  * @license http://opensource.org/licenses/GPL-3.0 GNU Public License 3.0
  */
 
-require_once('GribParser.php');
+require_once('GribDecoder.php');
 
 /**
- * GribProductDefinitionSectionParser is used to parse the Product Definition
+ * GribProductDefinitionSectionDecoder is used to decode the Product Definition
  * Section from a binary string.
  */
-class GribProductDefinitionSectionParser extends GribParser
+class GribProductDefinitionSectionDecoder extends GribDecoder
 {
 	const FLAG_HAS_GDS = 128;
 	const FLAG_HAS_BMS = 64;
 	
 	/**
-	 * Parse a binary string containing the Product Definition Section (PDS) from a
+	 * Decode a binary string containing the Product Definition Section (PDS) from a
 	 * GRIB Message. Return a GribProductDefinitionSection on success or throw a
-	 * GribParserException on error.
+	 * GribDecoderException on error.
 	 * 
-	 * @param string $rawData The binary string to parse
+	 * @param string $rawData The binary string to decode
 	 * @return GribProductDefinitionSection The Product Definition Section representation
-	 * @throws GribParserException
+	 * @throws GribDecoderException
 	 */
-	public static function parse($rawData)
+	public static function decode($rawData)
 	{
 		$section = new GribProductDefinitionSection();
 		$section->sectionLength = self::_getUInt($rawData, 0, 3);

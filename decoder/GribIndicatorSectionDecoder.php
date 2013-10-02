@@ -1,30 +1,30 @@
 <?php
 /**
- * GribIndicatorSectionParser class file
+ * GribIndicatorSectionDecoder class file
  * 
  * @author Eduardo P de Sousa <edupsousa@gmail.com>
  * @copyright Copyright (c) 2013, Eduardo P de Sousa
  * @license http://opensource.org/licenses/GPL-3.0 GNU Public License 3.0
  */
 
-require_once('GribParser.php');
+require_once('GribDecoder.php');
 
 /**
- * GribIndicatorSectionParser is used to parse the Indicator Section (IS)
+ * GribIndicatorSectionDecoder is used to decode the Indicator Section (IS)
  * from a binary string.
  */
-class GribIndicatorSectionParser extends GribParser
+class GribIndicatorSectionDecoder extends GribDecoder
 {
 	/**
-	 * Parse a binary string containing the Indicator Section (IS) from a
+	 * Decode a binary string containing the Indicator Section (IS) from a
 	 * GRIB Message. Return a GribIndicatorSection on success or throw a
-	 * GribParserException on error.
+	 * GribDecoderException on error.
 	 * 
-	 * @param string $rawData The binary string to parse
+	 * @param string $rawData The binary string to decode
 	 * @return GribIndicatorSection The Indicator Section representation
-	 * @throws GribParserException
+	 * @throws GribDecoderException
 	 */
-	public static function parse($rawData)
+	public static function decode($rawData)
 	{
 		$section = new GribIndicatorSection();
 		
@@ -33,10 +33,10 @@ class GribIndicatorSectionParser extends GribParser
 		$section->editionNumber = self::_getUInt($rawData, 7, 1);
 		
 		if ($section->gribIndicator != 'GRIB')
-			throw new GribParserException('', GribParserException::INDICATOR_NOT_FOUND);
+			throw new GribDecoderException('', GribDecoderException::INDICATOR_NOT_FOUND);
 		
 		if ($section->editionNumber != 1)
-			throw new GribParserException('', GribParserException::UNSUPPORTED_GRIB_VERSION);
+			throw new GribDecoderException('', GribDecoderException::UNSUPPORTED_GRIB_VERSION);
 		
 		return $section;
 	}

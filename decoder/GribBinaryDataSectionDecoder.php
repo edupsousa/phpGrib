@@ -1,30 +1,30 @@
 <?php
 /**
- * GribBinaryDataSectionParser class file
+ * GribBinaryDataSectionDecoder class file
  * 
  * @author Eduardo P de Sousa <edupsousa@gmail.com>
  * @copyright Copyright (c) 2013, Eduardo P de Sousa
  * @license http://opensource.org/licenses/GPL-3.0 GNU Public License 3.0
  */
 
-require_once('GribParser.php');
+require_once('GribDecoder.php');
 
 /**
- * GribBinaryDataSectionParser is used to parse the GRIB Message Binary 
+ * GribBinaryDataSectionDecoder is used to decode the GRIB Message Binary 
  * Data Section from a binary string.
  */
-class GribBinaryDataSectionParser extends GribParser
+class GribBinaryDataSectionDecoder extends GribDecoder
 {
 	/**
-	 * Parse a binary string containing the Binary Data Section (BDS).
+	 * Decode a binary string containing the Binary Data Section (BDS).
 	 * Return a GribBinaryDataSection on success or throw a
-	 * GribParserException on error.
+	 * GribDecoderException on error.
 	 * 
-	 * @param string $rawData The binary string to parse
+	 * @param string $rawData The binary string to decode
 	 * @return GribBinaryDataSection The Binary Data Section representation
-	 * @throws GribParserException
+	 * @throws GribDecoderException
 	 */
-	public static function parse($rawData)
+	public static function decode($rawData)
 	{
 		$section = new GribBinaryDataSection();
 		$section->sectionLength = self::_getUInt($rawData, 0, 3);
@@ -39,7 +39,7 @@ class GribBinaryDataSectionParser extends GribParser
 		} else if ($isComplexPacking && !$isHarmonicPacking) {
 			$section->packingFormat = GribBinaryDataSection::COMPLEX_PACKING;
 		} else {
-			throw new GribParserException('Invalid packing method!');
+			throw new GribDecoderException('Invalid packing method!');
 		}
 		
 		$section->originalDataWereInteger = self::_isFlagSet(32, $rawData, 3);
@@ -52,9 +52,9 @@ class GribBinaryDataSectionParser extends GribParser
 		if ($section->packingFormat == GribBinaryDataSection::SIMPLE_PACKING) {
 			$section->rawBinaryData = substr($rawData, 11);
 		} else if ($section->packingFormat == GribBinaryDataSection::HARMONIC_SIMPLE_PACKING) {
-			throw new GribParserException('Harmonic packing parser not implemented!');
+			throw new GribDecoderException('Harmonic packing decoder not implemented!');
 		} else {
-			throw new GribParserException('Complex packing parser not implemented!');
+			throw new GribDecoderException('Complex packing decoder not implemented!');
 		}
 		
 		return $section;

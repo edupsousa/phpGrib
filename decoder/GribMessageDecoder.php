@@ -1,56 +1,56 @@
 <?php
 /**
- * GribMessageParser class file
+ * GribMessageDecoder class file
  * 
  * @author Eduardo P de Sousa <edupsousa@gmail.com>
  * @copyright Copyright (c) 2013, Eduardo P de Sousa
  * @license http://opensource.org/licenses/GPL-3.0 GNU Public License 3.0
  */
 
-require_once('GribParser.php');
+require_once('GribDecoder.php');
 
 /**
- * GribMessageParser is used to parse a GRIB message from a binary string.
+ * GribMessageDecoder is used to decode a GRIB message from a binary string.
  */
-class GribMessageParser extends GribParser
+class GribMessageDecoder extends GribDecoder
 {
 	/**
-	 * Parse a binary string containing a encoded GRIB message and return a
-	 * GribMessage object in case of sucessfull parsing.
+	 * Decode a binary string containing a encoded GRIB message and return a
+	 * GribMessage object in case of sucessfull decoding.
 	 * 
-	 * @param string $rawData The binary string to parse
+	 * @param string $rawData The binary string to decode
 	 * @return GribMessage The GRIB message representation.
-	 * @throws GribParserException
+	 * @throws GribDecoderException
 	 */
-	public static function parse($rawData)
+	public static function decode($rawData)
 	{
 		$currentPosition = 0;
 		$rawDataLength = strlen($rawData);
 		if ($rawDataLength < 8)
-			throw new GribParserException('', GribParserException::MESSAGE_TOO_SHORT);
+			throw new GribDecoderException('', GribDecoderException::MESSAGE_TOO_SHORT);
 
 		$rawIndicatorSection = self::_getRawSectionFromMessage($rawData, $currentPosition, 8);
-		$indicatorSection = GribIndicatorSectionParser::parse($rawIndicatorSection);
+		$indicatorSection = GribIndicatorSectionDecoder::decode($rawIndicatorSection);
 		
 		if ($indicatorSection->messageLength != $rawDataLength)
-			throw new GribParserException('', GribParserException::MESSAGE_LENGHT_MISMATCH);
+			throw new GribDecoderException('', GribDecoderException::MESSAGE_LENGHT_MISMATCH);
 		
 		$rawProductDefinitionSection = self::_getRawSectionFromMessage($rawData, $currentPosition);
-		$productDefinitionSection = GribProductDefinitionSectionParser::parse($rawProductDefinitionSection);
+		$productDefinitionSection = GribProductDefinitionSectionDecoder::decode($rawProductDefinitionSection);
 		
 		if ($productDefinitionSection->hasGDS) {
 			$rawGridDescriptionSection = self::_getRawSectionFromMessage($rawData, $currentPosition);
-			$gridDescriptionSection = GribGridDescriptionSectionParser::parse($rawGridDescriptionSection);
+			$gridDescriptionSection = GribGridDescriptionSectionDecoder::decode($rawGridDescriptionSection);
 		} else {
 			$gridDescriptionSection = null;
 		}
 		
 		if ($productDefinitionSection->hasBMS) {
-			throw new GribParserException('BMS parser not implemented!');
+			throw new GribDecoderException('BMS decoder not implemented!');
 		}
 		
 		$rawBinaryDataSection = self::_getRawSectionFromMessage($rawData, $currentPosition);
-		$binaryDataSection = GribBinaryDataSectionParser::parse($rawBinaryDataSection);
+		$binaryDataSection = GribBinaryDataSectionDecoder::decode($rawBinaryDataSection);
 		
 		$rawDataSection = new GribMessage();
 		$rawDataSection->indicatorSection = $indicatorSection;

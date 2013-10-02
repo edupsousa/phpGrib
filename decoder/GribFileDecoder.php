@@ -1,18 +1,18 @@
 <?php
 /**
- * GribFileParser class file
+ * GribFileDecoder class file
  * 
  * @author Eduardo P de Sousa <edupsousa@gmail.com>
  * @copyright Copyright (c) 2013, Eduardo P de Sousa
  * @license http://opensource.org/licenses/GPL-3.0 GNU Public License 3.0
  */
 
-require_once('GribParser.php');
+require_once('GribDecoder.php');
 
 /**
- * GribFileParser is used to parse a file containing GRIB Messages.
+ * GribFileDecoder is used to decode a file containing GRIB Messages.
  */
-class GribFileParser extends GribParser
+class GribFileDecoder extends GribDecoder
 {
 	const MESSAGE_IDENTIFICATOR_LENGHT = 4;
 	const MESSAGE_SIZE_FIELD_LENGHT = 3;
@@ -33,13 +33,13 @@ class GribFileParser extends GribParser
 	 * );
 	 * @return GribMessage[] A array containing all GRIB messages from the 
 	 * file as GribMessage objects
-	 * @throws GribParserException
+	 * @throws GribDecoderException
 	 */
 	public static function loadFile($path, $filter = null)
 	{
 		$handle = fopen($path,'rb');
 		if (!$handle)
-			throw new GribParserException('',  GribParserException::UNABLE_TO_OPEN_FILE);
+			throw new GribDecoderException('',  GribDecoderException::UNABLE_TO_OPEN_FILE);
 		
 		$messages = array();
 		while ($message = self::readMessage($handle)) {
@@ -68,7 +68,7 @@ class GribFileParser extends GribParser
 	 * 
 	 * @param resource $handle The handle resource created with fopen
 	 * @return GribMessage A representation from the GRIB message read from file
-	 * @throws GribParserException
+	 * @throws GribDecoderException
 	 */
 	public static function readMessage($handle)
 	{
@@ -77,11 +77,11 @@ class GribFileParser extends GribParser
 			$gribVersion = ord(self::_readStringFromFile($handle, self::GRIB_VERSION_FIELD_LENGHT));
 			
 			if ($gribVersion != 1)
-				throw new GribParserException('', GribParserException::UNSUPPORTED_GRIB_VERSION);
+				throw new GribDecoderException('', GribDecoderException::UNSUPPORTED_GRIB_VERSION);
 
 			/*
 			 * Rewind file pointer to the beginning of Indicator Section 
-			 * to read entire GRIB message for parsing.
+			 * to read entire GRIB message for decoding.
 			 */
 			fseek($handle,
 				-(self::MESSAGE_IDENTIFICATOR_LENGHT + 
@@ -90,7 +90,7 @@ class GribFileParser extends GribParser
 				),
 				SEEK_CUR);
 			$gribMessage = self::_readStringFromFile($handle, $messageSize);
-			return GribMessageParser::parse($gribMessage);
+			return GribMessageDecoder::decode($gribMessage);
 		}
 		return false;
 	}

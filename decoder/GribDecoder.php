@@ -1,6 +1,6 @@
 <?php
 /**
- * GribParser class file
+ * GribDecoder class file
  * 
  * @author Eduardo P de Sousa <edupsousa@gmail.com>
  * @copyright Copyright (c) 2013, Eduardo P de Sousa
@@ -9,19 +9,19 @@
 
 
 require_once(dirname(__FILE__) . '/../grib/GribMessage.php');
-require_once('GribFileParser.php');
-require_once('GribMessageParser.php');
-require_once('GribIndicatorSectionParser.php');
-require_once('GribProductDefinitionSectionParser.php');
-require_once('GribGridDescriptionSectionParser.php');
-require_once('GribBinaryDataSectionParser.php');
+require_once('GribFileDecoder.php');
+require_once('GribMessageDecoder.php');
+require_once('GribIndicatorSectionDecoder.php');
+require_once('GribProductDefinitionSectionDecoder.php');
+require_once('GribGridDescriptionSectionDecoder.php');
+require_once('GribBinaryDataSectionDecoder.php');
 
 
 /**
- * GribParserException extends the PHP Exception class for throwing
- * exceptions related to Grib parsing.
+ * GribDecoderException extends the PHP Exception class for throwing
+ * exceptions related to Grib decoding.
  */
-class GribParserException extends Exception
+class GribDecoderException extends Exception
 {
 	const UNABLE_TO_OPEN_FILE = 0x1;
 	const UNSUPPORTED_GRIB_VERSION = 0x2;
@@ -31,11 +31,11 @@ class GribParserException extends Exception
 }
 
 /**
- * GribParser is the base class for all GRIB parsing classes. It contains static
+ * GribDecoder is the base class for all GRIB decoding classes. It contains static
  * functions to obtain and convert data from binary strings used by its child
  * classes.
  */
-class GribParser
+class GribDecoder
 {
 	/**
 	 * This function is used to retrieve a GRIB message section as a binary 

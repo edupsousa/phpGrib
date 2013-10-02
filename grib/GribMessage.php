@@ -35,7 +35,7 @@ class GribMessage extends GribSection
 	
 	/**
 	 * @var null
-	 * @todo Implement the Bitmap section parsing
+	 * @todo Implement the Bitmap section decoding
 	 */
 	public $bitmapSection;
 	
