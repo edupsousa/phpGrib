@@ -16,9 +16,29 @@ require_once('GribGridDescription.php');
  */
 class GribGridDescriptionSection extends GribSection
 {
+	/**
+	 * @var int Length of GDS section
+	 */
 	public $sectionLength;
+	
+	/**
+	 * @var int Number of vertical coordinate parameters
+	 */
 	public $verticalCoordinateParameters;
+	
+	/**
+	 * @var int Location in octets of the list of vertical parameters
+	 * or points in each row
+	 */
 	public $pvOrPl;
+	
+	/**
+	 * @var int Data representation type
+	 */
 	public $dataRepresentationType;
+	
+	/**
+	 * @var GribGridDescription The grid description object
+	 */
 	public $gridDescription;
 }

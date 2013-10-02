@@ -20,15 +20,51 @@ class GribBinaryDataSection extends GribSection
 	const HARMONIC_SIMPLE_PACKING = 1;
 	const COMPLEX_PACKING = 2;
 	
+	/**
+	 * @var int Length of the BDS section
+	 */
 	public $sectionLength;
+	
+	/**
+	 * @var int Data packing algorithm
+	 */
 	public $packingFormat;
+	
+	/**
+	 * @var int Original data type: 
+	 * 0 - Float Point
+	 * 1 - Integer
+	 */
 	public $originalDataWereInteger;
+	
+	/**
+	 * @var int Additional flags in octect 14
+	 */
 	public $hasAdditionalFlags;
+	
+	/**
+	 * @var int Number of unused bytes at end of section
+	 */
 	public $unusedBytesAtEnd;
+	
+	/**
+	 * @var int The binary scale factor (E)
+	 */
 	public $binaryScaleFactor;
+	
+	/**
+	 * @var float Reference number (R) for the packed data
+	 */
 	public $referenceValue;
+	
+	/**
+	 * @var int Bits used to store each point data
+	 */
 	public $datumPackingBits;
-	public $harmonicCoefficientRealPart;
+	
+	/**
+	 * @var string The binary data stored in the section
+	 */
 	public $rawBinaryData;
 	
 	/**
@@ -36,7 +72,7 @@ class GribBinaryDataSection extends GribSection
 	 * Data is returned unpacked. Currently this function only
 	 * supports the simple packing algorithm.
 	 * 
-	 * @param integer $index Index of the data
+	 * @param int $index Index of the data
 	 * @return float The unpacked data as a float point value
 	 */
 	public function getDataAt($index)

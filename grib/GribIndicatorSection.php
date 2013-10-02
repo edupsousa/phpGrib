@@ -14,7 +14,18 @@ require_once('GribSection.php');
  */
 class GribIndicatorSection extends GribSection
 {
+	/**
+	 * @var string The GRIB indicator string 'GRIB'
+	 */
 	public $gribIndicator;
+	
+	/**
+	 * @var int Length of the entire GRIB message, this section included
+	 */
 	public $messageLength;
+	
+	/**
+	 * @var int Number of the GRIB message edition
+	 */
 	public $editionNumber;
 }
