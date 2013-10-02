@@ -50,18 +50,24 @@ class GribBinaryDataSection extends GribSection
 		 */
 		if ($this->datumPackingBits == 0)
 			return $this->referenceValue;
-
-		/**
-		 * @todo Optimize unpacking algorithm to allow use of partial bytes
-		 */
-		if ($this->datumPackingBits % 8)
-			throw new Exception('Currently we only suport unpacking multiples of 8 bits');
-
-		$charsToGet = (int)$this->datumPackingBits / 8;
-		$bytePosition = $index * $charsToGet;
 		
-		$hexData = unpack('H*', substr($this->rawBinaryData, $bytePosition, $charsToGet));
-		$packedValue = hexdec($hexData[1]);
+		$bitIndex = $index*$this->datumPackingBits;
+		$valueStart = floor($bitIndex/8);
+		$byteLength = ceil(($bitIndex+$this->datumPackingBits)/8)-$valueStart;
+		$maskOffset = $bitIndex % 8;
+		$mask = (pow(2,$this->datumPackingBits)-1) << $maskOffset;
+		
+		$valueData = unpack('C*', substr($this->rawBinaryData, $valueStart, $byteLength));
+		
+		foreach ($valueData as $key => $byteValue) {
+			if ($key == 1) {
+				$intValue = $byteValue;
+			} else {
+				$intValue = ($intValue << 8) + $byteValue;
+			}
+		}
+		$packedValue = ($mask & $intValue) >> $maskOffset;
+		
 		
 		return ($this->referenceValue + ($packedValue * pow(2,  $this->binaryScaleFactor)));
 	}
