@@ -62,7 +62,7 @@ class GribFileDecoder extends GribDecoder
 				!in_array($message->layerOrLevelValue,$filter['levelValues']))
 					continue;
 			}
-			$messages[] = $message;
+			$messages[$messageCount] = $message;
 		}
 		
 		fclose($handle);
