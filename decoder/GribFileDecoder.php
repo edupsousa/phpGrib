@@ -45,15 +45,15 @@ class GribFileDecoder extends GribDecoder
 		while ($message = self::readMessage($handle)) {
 			if ($filter) {
 				if (isset($filter['parameters']) &&
-				!in_array($message->productDefinitionSection->parameterId,$filter['parameters']))
+				!in_array($message->parameterId,$filter['parameters']))
 					continue;
 				
 				if (isset($filter['levelTypes']) &&
-				!in_array($message->productDefinitionSection->typeOfLayerOrLevel,$filter['levelTypes']))
+				!in_array($message->typeOfLayerOrLevel,$filter['levelTypes']))
 					continue;
 				
 				if (isset($filter['levelValues']) &&
-				!in_array($message->productDefinitionSection->layerOrLevelValue,$filter['levelValues']))
+				!in_array($message->layerOrLevelValue,$filter['levelValues']))
 					continue;
 			}
 			$messages[] = $message;

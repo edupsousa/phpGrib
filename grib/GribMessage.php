@@ -7,26 +7,42 @@
  * @license http://opensource.org/licenses/GPL-3.0 GNU Public License 3.0
  */
 
-require_once('GribSection.php');
-require_once('GribIndicatorSection.php');
-require_once('GribProductDefinitionSection.php');
 require_once('GribGridDescriptionSection.php');
-require_once('GribBinaryDataSection.php');
 
 /**
  * GribMessage is the PHP representation of a GRIB message.
  */
-class GribMessage extends GribSection
+class GribMessage
 {
-	/**
-	 * @var GribIndicatorSection
-	 */
-	public $indicatorSection;
 	
-	/**
-	 * @var GribProductDefinitionSection
-	 */
-	public $productDefinitionSection;
+	public $messageLength;
+	public $messageVersion;
+	
+	public $parameterTableVersion;
+	public $originCenterId;
+	public $originProcessId;
+	public $gridId;
+	public $hasGDS;
+	public $hasBMS;
+	public $parameterId;
+	public $levelTypeId;
+	public $levelValue;
+	public $referenceTime;
+	public $timeUnit;
+	public $timePeriod1;
+	public $timePeriod2;
+	public $timeRangeIndicator;
+	public $avgNumberIncluded;
+	public $avgNumberMissing;
+	public $originSubcenterId;
+	public $decimalScaleFactor;
+	
+	public $dataIsInteger;
+	public $unusedBytes;
+	public $binaryScaleFactor;
+	public $referenceValue;
+	public $pointDataLength;
+	public $rawData;
 	
 	/**
 	 * @var GribGridDescriptionSection
@@ -40,7 +56,40 @@ class GribMessage extends GribSection
 	public $bitmapSection;
 	
 	/**
-	 * @var GribBinaryDataSection
+	 * Get data at specified index from the raw binary data.
+	 * Data is returned unpacked. Currently this function only
+	 * supports the simple packing algorithm.
+	 * 
+	 * @param int $index Index of the data
+	 * @return float The unpacked data as a float point value
 	 */
-	public $binaryDataSection;
+	public function getDataAt($index)
+	{
+		/*
+		 * If zero bits are need for packing so all points got the same value
+		 * of the reference value.
+		 */
+		if ($this->pointDataLength == 0)
+			return $this->referenceValue;
+		
+		$bitIndex = $index*$this->pointDataLength;
+		$valueStart = floor($bitIndex/8);
+		$byteLength = ceil(($bitIndex+$this->pointDataLength)/8)-$valueStart;
+		$maskOffset = $bitIndex % 8;
+		$mask = (pow(2,$this->pointDataLength)-1) << $maskOffset;
+		
+		$valueData = unpack('C*', substr($this->rawData, $valueStart, $byteLength));
+		
+		foreach ($valueData as $key => $byteValue) {
+			if ($key == 1) {
+				$intValue = $byteValue;
+			} else {
+				$intValue = ($intValue << 8) + $byteValue;
+			}
+		}
+		$packedValue = ($mask & $intValue) >> $maskOffset;
+		
+		
+		return ($this->referenceValue + ($packedValue * pow(2,  $this->binaryScaleFactor)));
+	}
 }

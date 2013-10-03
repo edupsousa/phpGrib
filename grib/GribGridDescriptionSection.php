@@ -7,14 +7,13 @@
  * @license http://opensource.org/licenses/GPL-3.0 GNU Public License 3.0
  */
 
-require_once('GribSection.php');
 require_once('GribGridDescription.php');
 
 /**
  * GribGridDescriptionSection represents the Grid Description Section (GDS)
  * of a GRIB message and his fields.
  */
-class GribGridDescriptionSection extends GribSection
+class GribGridDescriptionSection
 {
 	/**
 	 * @var int Length of GDS section

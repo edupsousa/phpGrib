@@ -11,10 +11,7 @@
 require_once(dirname(__FILE__) . '/../grib/GribMessage.php');
 require_once('GribFileDecoder.php');
 require_once('GribMessageDecoder.php');
-require_once('GribIndicatorSectionDecoder.php');
-require_once('GribProductDefinitionSectionDecoder.php');
 require_once('GribGridDescriptionSectionDecoder.php');
-require_once('GribBinaryDataSectionDecoder.php');
 
 
 /**
@@ -28,6 +25,7 @@ class GribDecoderException extends Exception
 	const MESSAGE_TOO_SHORT = 0x3;
 	const INDICATOR_NOT_FOUND = 0x4;
 	const MESSAGE_LENGHT_MISMATCH = 0x5;
+	const UNSUPPORTED_PACKING = 0x6;
 }
 
 /**
