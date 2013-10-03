@@ -11,7 +11,6 @@
 require_once(dirname(__FILE__) . '/../grib/GribMessage.php');
 require_once('GribFileDecoder.php');
 require_once('GribMessageDecoder.php');
-require_once('GribGridDescriptionSectionDecoder.php');
 
 
 /**
@@ -26,6 +25,7 @@ class GribDecoderException extends Exception
 	const INDICATOR_NOT_FOUND = 0x4;
 	const MESSAGE_LENGHT_MISMATCH = 0x5;
 	const UNSUPPORTED_PACKING = 0x6;
+	const UNSUPPORTED_GRID = 0x7;
 }
 
 /**

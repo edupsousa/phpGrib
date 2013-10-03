@@ -42,7 +42,7 @@ class GribMessageDecoder extends GribDecoder
 		
 		if ($gribMessage->hasGDS) {
 			$rawGridDescriptionSection = self::_getRawSectionFromMessage($rawData, $currentPosition);
-			$gridDescriptionSection = GribGridDescriptionSectionDecoder::decode($rawGridDescriptionSection);
+			self::decodeGridDescriptionSection($rawGridDescriptionSection, $gribMessage);
 		} else {
 			$gridDescriptionSection = null;
 		}
@@ -53,8 +53,6 @@ class GribMessageDecoder extends GribDecoder
 		
 		$rawBinaryDataSection = self::_getRawSectionFromMessage($rawData, $currentPosition);
 		self::decodeBinaryDataSection($rawBinaryDataSection, $gribMessage);
-		
-		$gribMessage->gridDescriptionSection = $gridDescriptionSection;
 		
 		return $gribMessage;
 	}
@@ -151,5 +149,52 @@ class GribMessageDecoder extends GribDecoder
 		$message->rawData = substr($rawData, 11);
 	}
 	
+	protected static function decodeGridDescriptionSection($rawData, &$message)
+	{
+		$message->gridRepresentationType = self::_getUInt($rawData, 5, 1);
+		
+		//Plate Carree (0) grid
+		if ($message->gridRepresentationType == 0) {
+			$message->gridDescription = self::decodeLatLonGridDescription(substr($rawData, 6));
+		} else {
+			throw new GribDecoderException('',GribDecoderException::UNSUPPORTED_GRID);
+		}
+	}
 	
+	protected static function decodeLatLonGridDescription($rawData)
+	{
+		$description = new GribLatLonGridDescription();
+		
+		$description->latitudePoints = self::_getUInt($rawData, 0, 2);
+		$description->longitudePoints = self::_getUInt($rawData, 2, 2);
+		
+		$description->latitudeFirstPoint = self::_getSignedInt($rawData, 4, 3);
+		$description->longitudeFirstPoint = self::_getSignedInt($rawData, 7, 3);
+		
+		$description->incrementsGiven = self::_isFlagSet(128, $rawData, 10);
+		$description->earthModel = (self::_isFlagSet(64, $rawData, 10) ?
+			GribLatLonGridDescription::EARTH_SPHEROID : 
+			GribLatLonGridDescription::EARTH_SPHERICAL);
+		
+		$description->componentsDirection = (self::_isFlagSet(8, $rawData, 10) ?
+			GribLatLonGridDescription::DIRECTION_BY_GRID : 
+			GribLatLonGridDescription::DIRECTION_NORTH_EAST);
+		
+		$description->latitudeLastPoint = self::_getSignedInt($rawData, 11, 3);
+		$description->longitudeLastPoint = self::_getSignedInt($rawData, 14, 3);
+		
+		$description->longitudinalIncrement = self::_getUInt($rawData, 17, 2);
+		if ($description->longitudinalIncrement == 65535)
+			$description->longitudinalIncrement = false;
+		
+		$description->latitudinalIncrement = self::_getUInt($rawData, 19, 2);
+		if ($description->latitudinalIncrement == 65535)
+			$description->latitudinalIncrement = false;
+		
+		$description->scanNegativeI = self::_isFlagSet(128, $rawData, 21);
+		$description->scanNegativeJ = self::_isFlagSet(64, $rawData, 21);
+		$description->scanJConsecutive = self::_isFlagSet(32, $rawData, 21);
+		
+		return $description;
+	}
 }

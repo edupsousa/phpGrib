@@ -7,7 +7,7 @@
  * @license http://opensource.org/licenses/GPL-3.0 GNU Public License 3.0
  */
 
-require_once('GribGridDescriptionSection.php');
+require_once('GribGridDescription.php');
 
 /**
  * GribMessage is the PHP representation of a GRIB message.
@@ -44,16 +44,8 @@ class GribMessage
 	public $pointDataLength;
 	public $rawData;
 	
-	/**
-	 * @var GribGridDescriptionSection
-	 */
-	public $gridDescriptionSection;
-	
-	/**
-	 * @var null
-	 * @todo Implement the Bitmap section decoding
-	 */
-	public $bitmapSection;
+	public $gridRepresentationType;
+	public $gridDescription;
 	
 	/**
 	 * Get data at specified index from the raw binary data.

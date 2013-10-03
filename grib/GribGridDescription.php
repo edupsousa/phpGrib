@@ -31,12 +31,12 @@ class GribLatLonGridDescription extends GribGridDescription
 	/**
 	 * @var int Number of data points along latitude
 	 */
-	public $pointsAlongLatitude;
+	public $latitudePoints;
 	
 	/**
 	 * @var int Number of data points along longitude
 	 */
-	public $pointsAlongLongitude;
+	public $longitudePoints;
 	
 	/**
 	 * @var int The first point latitude
@@ -51,7 +51,7 @@ class GribLatLonGridDescription extends GribGridDescription
 	/**
 	 * @var int Direction increment flag, 0 - Not given, 1 - Given
 	 */
-	public $directionIncrementGiven;
+	public $incrementsGiven;
 	
 	/**
 	 * @var int Earth Model flag, 0 - Spherical, 1 - Spheroid
