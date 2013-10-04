@@ -22,83 +22,81 @@ class GribGridDescription
  */
 class GribLatLonGridDescription extends GribGridDescription
 {
-	const EARTH_SPHERICAL = 0;
-	const EARTH_SPHEROID = 1;
-	
-	const DIRECTION_NORTH_EAST = 0;
-	const DIRECTION_BY_GRID = 1;
-	
 	/**
-	 * @var int Number of data points along latitude
+	 * @var int Number of latitudinal data points
 	 */
 	public $latitudePoints;
 	
 	/**
-	 * @var int Number of data points along longitude
+	 * @var int Number of longitudinal data points
 	 */
 	public $longitudePoints;
 	
 	/**
-	 * @var int The first point latitude
+	 * @var int Latitude of the first point
 	 */
 	public $latitudeFirstPoint;
 	
 	/**
-	 * @var int The first point longitude 
+	 * @var int Longitude of the first point
 	 */
 	public $longitudeFirstPoint;
 	
 	/**
-	 * @var int Direction increment flag, 0 - Not given, 1 - Given
+	 * @var bool TRUE if latitude and longitude increments are given
 	 */
 	public $incrementsGiven;
 	
 	/**
-	 * @var int Earth Model flag, 0 - Spherical, 1 - Spheroid
+	 * @var bool If TRUE use Oblate Spheroid Earth Figure with size as 
+	 * determined by IAU in 1965: 6378.160 km, 6356.775 km, f = 1/297.0.
+	 * If FALSE use Spheric Earth Figure with radius = 6367.47 km
 	 */
-	public $earthModel;
+	public $useOblateSpheroidFigure;
 	
 	/**
-	 * @var int Components direction flag: 
-	 * 0 - U and V components are resolved relative to easterly and 
-	 * northely directions
-	 * 1 - U and V components resolved relative to defined grid in
-	 * direction of increasing x and y coordinates respectively.
+	 * @var bool If TRUE U and V wind components resolved relative to the
+	 * grid latitude/longitude directions
+	 * If FALSE U and V components are resolved relative to East and North
+	 * directions.
 	 */
-	public $componentsDirection;
+	public $windComponentsAsGrid;
 	
 	/**
-	 * @var int The last point latitude
+	 * @var int Latitude of the last data point
 	 */
 	public $latitudeLastPoint;
 	
 	/**
-	 * @var int The last point longitude
+	 * @var int Longitude of the last data point
 	 */
 	public $longitudeLastPoint;
 	
 	/**
-	 * @var int Longitudinal increment
+	 * @var int Longitudinal increment between points
 	 */
 	public $longitudinalIncrement;
 	
 	/**
-	 * @var int Latitudinal increment
+	 * @var int Latitudinal increment between points
 	 */
 	public $latitudinalIncrement;
 	
 	/**
-	 * @var int If this flag is set, the points are scanned in -i direction
-	 */
-	public $scanNegativeI;
+	 * @var bool If TRUE, points are stored from South to North (positive increment)
+	 * if FALSE points are stored in North to South direction (negative increment)
+.	 */
+	public $scanToNorth;
 	
 	/**
-	 * @var int If this flag is set, the points are scanned in -j direction
+	 * @var bool If TRUE, points are stored from East to West (negative increment)
+	 * if FALSE points are stored in West to East direction (positive increment)
 	 */
-	public $scanNegativeJ;
+	public $scanToWest;
 	
 	/**
-	 * @var int If set 1 points in J direction are consecutive.
+	 * @var bool If TRUE, points are stored consecutively by latitude,
+	 * if FALSE points are stored consecutively by longitude. 
 	 */
-	public $scanJConsecutive;
+	public $scanLatitudeConsecutive;
 }
