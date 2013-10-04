@@ -84,4 +84,16 @@ class GribMessage
 		
 		return ($this->referenceValue + ($packedValue * pow(2,  $this->binaryScaleFactor)));
 	}
+	
+	public function getPointAt($index)
+	{
+		if (!$this->gridDescription)
+			throw new Exception('Grid description not found!');
+		
+		if ($this->gridRepresentationType != 0)
+			throw new Exception('Sorry! Only equidistant grids are supported right now!');
+		
+		
+		return $this->gridDescription->getPointCoordinates($index);
+	}
 }

@@ -99,4 +99,18 @@ class GribLatLonGridDescription extends GribGridDescription
 	 * if FALSE points are stored consecutively by longitude. 
 	 */
 	public $scanLatitudeConsecutive;
+	
+	public function getPointCoordinates($index)
+	{
+		if (!$this->latitudinalIncrement || !$this->longitudinalIncrement) {
+			throw new Exception('Latitude and Longitude increments not given!');
+		}
+		if ($this->scanLatitudeConsecutive) {
+			throw new Exception('Implement latitude consecutive scan!');
+		} else {
+			$latitude = $this->latitudeFirstPoint + floor($index / $this->longitudePoints) * $this->latitudinalIncrement;
+			$longitude = $this->longitudeFirstPoint + floor($index % $this->longitudePoints) * $this->longitudinalIncrement;
+		}
+		return array($latitude, $longitude);
+	}
 }
