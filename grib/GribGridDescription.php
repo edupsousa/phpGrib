@@ -100,6 +100,14 @@ class GribLatLonGridDescription extends GribGridDescription
 	 */
 	public $scanLatitudeConsecutive;
 	
+	
+	/**
+	 * Retrieve the latitude and longitude for a given index.
+	 * 
+	 * @param int $index The to retrieve coordinates
+	 * @return int[] A array containing respectively latitude and longitude
+	 * for the index given.
+	 */
 	public function getPointCoordinates($index)
 	{
 		if (!$this->latitudinalIncrement || !$this->longitudinalIncrement) {
