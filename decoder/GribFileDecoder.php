@@ -42,27 +42,21 @@ class GribFileDecoder extends GribDecoder
 			throw new GribDecoderException('',  GribDecoderException::UNABLE_TO_OPEN_FILE);
 		
 		$messages = array();
-		$messageCount = -1;
 		while ($message = self::readMessage($handle)) {
-			$messageCount++;
 			if ($filter) {
-				if (isset($filter['positions']) && 
-				!in_array($messageCount,$filter['positions']))
-					continue;
-				
 				if (isset($filter['parameters']) &&
 				!in_array($message->parameterId,$filter['parameters']))
 					continue;
 				
 				if (isset($filter['levelTypes']) &&
-				!in_array($message->typeOfLayerOrLevel,$filter['levelTypes']))
+				!in_array($message->levelTypeId,$filter['levelTypes']))
 					continue;
 				
 				if (isset($filter['levelValues']) &&
-				!in_array($message->layerOrLevelValue,$filter['levelValues']))
+				!in_array($message->levelValue,$filter['levelValues']))
 					continue;
 			}
-			$messages[$messageCount] = $message;
+			$messages[] = $message;
 		}
 		
 		fclose($handle);
